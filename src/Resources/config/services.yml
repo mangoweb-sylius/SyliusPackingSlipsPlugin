@@ -1,0 +1,17 @@
+services:
+    _defaults:
+        autowire: false
+        autoconfigure: false
+        public: false
+
+    MangoSylius\PackingSlipsPlugin\Menu\PackingSlipsMenuBuilder:
+        tags:
+            - name: kernel.event_listener
+              event: sylius.menu.admin.main
+              method: buildMenu
+
+    MangoSylius\PackingSlipsPlugin\Controller\PackingSlipsController:
+        public: true
+        arguments:
+            $templatingEngine: '@templating'
+            $shipmentRepository: '@sylius.repository.shipment'

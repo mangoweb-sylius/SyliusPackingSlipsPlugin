@@ -1,0 +1,35 @@
+<div class="slips-slip is-{{ shipment.order.payments.last.state }}">
+	<div class="slips-header">
+		{{ shipment.order.number }}, <strong>{{ shipment.order.shippingAddress.firstName }} {{ shipment.order.shippingAddress.lastName }}</strong>
+	</div>
+	<div class="slips-header">
+		{{ shipment.order.total / 100 }} {{ shipment.order.currencyCode }},
+		{{ shipment.method }}
+	</div>
+	<div class="slips-products">
+		{% for item in shipment.order.items %}
+			<div>
+				{% if item.quantity > 1 %}
+					<strong>
+				{% endif %}
+				{% set rowLimit = 55 %}
+				{% set itemName = item.quantity ~ "x " ~ (item.variantName is not empty ? item.variantName : item.productName) %}
+				{% set itemNameLength = itemName|length %}
+				{% if itemNameLength > rowLimit %}
+					{% set residue = itemNameLength - rowLimit %}
+					{% set half = itemNameLength / 2 %}
+
+					{% set firstHalf = itemName[:half - (residue / 2)] %}
+					{% set lastHalf = itemName[half + (residue / 2):] %}
+					{{ firstHalf }}&hellip;{{ lastHalf }}
+				{% else %}
+				{{ itemName }}
+				{% endif %}
+
+				{% if item.quantity > 1 %}
+					</strong>
+				{% endif %}
+			</div>
+		{% endfor %}
+	</div>
+</div>

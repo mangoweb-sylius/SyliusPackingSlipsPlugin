@@ -1,0 +1,162 @@
+{% extends '@SyliusAdmin/layout.html.twig' %}
+
+{% block title %}{{ 'mango-sylius.ui.packingSlips.packingSlips'|trans }}{% endblock %}
+
+{% block content %}
+
+	<div class="ui stackable two column grid">
+		<div class="column">
+			<h1 class="ui header">
+				<i class="circular download icon"></i>
+				<div class="content">
+					{{ 'mango-sylius.ui.packingSlips.packingSlips'|trans }}
+				</div>
+			</h1>
+		</div>
+
+		<div class="middle aligned column">
+			<div class="ui right floated buttons">
+
+				<a class="ui labeled icon button primary "
+				   href="#"
+				   {% if shipments|length == 0 %}disabled="disabled"{% endif %}
+				   data-url="{{ path('mango_sylius_admin_packing_slips_show') }}"
+				   onclick="downloadCsv(this, 1)">
+					<i class="icon download"></i>
+					{{ 'mango-sylius.ui.packingSlips.downloadButton'|trans }} (<span class="counter">{{ 'mango-sylius.ui.packingSlips.allShipment'|trans }}</span>)
+				</a>
+
+			</div>
+		</div>
+	</div>
+
+	{% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
+	{% import '@SyliusUi/Macro/table.html.twig' as table %}
+
+	<div class="ui segment">
+		{% if shipments|length > 0 %}
+			<table class="ui sortable stackable celled table">
+				<thead>
+				<tr>
+					<th></th>
+					<th class="sylius-table-column">
+						{{ 'mango-sylius.ui.packingSlips.orderNumber'|trans }}
+					</th>
+					<th class="sylius-table-column">
+						{{ 'mango-sylius.ui.packingSlips.shippingMethod'|trans }}
+					</th>
+					<th class="sylius-table-column">
+						{{ 'mango.email.order.shippingAddress'|trans }}
+					</th>
+					<th class="sylius-table-column">
+						{{ 'mango-sylius.ui.packingSlips.email'|trans }}
+					</th>
+					<th class="sylius-table-column">
+						{{ 'mango-sylius.ui.packingSlips.phoneNumber'|trans }}
+					</th>
+					<th class="sylius-table-column">
+						{{ 'mango-sylius.ui.packingSlips.orderDate'|trans }}
+					</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for row in shipments %}
+					<tr class="item">
+						<td>
+							<input class="bulk-select-checkbox exportCheckbox" type="checkbox"
+								   name="checkbox-{{ row.id }}" value="{{ row.id }}"/>
+						</td>
+						<td>
+							<a href="{{ path('sylius_admin_order_show', {'id': row.order.id }) }}">{{ row.order.number }}</a>
+						</td>
+						<td>
+							{{ row.method.name }}
+						</td>
+						<td>
+							{% if row.order.shippingAddress.company %}
+								{{ row.order.shippingAddress.company }},
+							{% endif %}
+							{{ row.order.shippingAddress.firstName }}
+							{{ row.order.shippingAddress.lastName }},
+							{{ row.order.shippingAddress.street }},
+							{{ row.order.shippingAddress.postcode }}
+							{{ row.order.shippingAddress.city }},
+							{{ row.order.shippingAddress.countryCode }}
+						</td>
+						<td>
+							{{ row.order.customer.email }}
+						</td>
+						<td>
+							{{ row.order.shippingAddress.phoneNumber }}
+						</td>
+						<td>
+							{{ row.order.checkoutCompletedAt|date }}
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			{% import '@SyliusUi/Macro/messages.html.twig' as messages %}
+			{{ messages.info('sylius.ui.no_results_to_display') }}
+		{% endif %}
+	</div>
+
+
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script>
+		$(document).ready(function () {
+			$('.exportCheckbox').on('change', countCheckboxes);
+		});
+
+		function countCheckboxes() {
+			var checkedCheckboxes = $('.exportCheckbox:checked');
+
+			var chLength = checkedCheckboxes.length;
+			if (chLength > 0) {
+				$('.counter').html(chLength);
+			} else {
+				$('.counter').html('{{ 'mango-sylius.ui.packingSlips.allShipment'|trans }}');
+			}
+		}
+
+		function getCheckedCheckboxesIds() {
+			var ids = [];
+
+			$('.exportCheckbox:checked').each(function () {
+				ids.push($(this).val());
+			});
+
+			if (ids.length === 0) {
+				$('.exportCheckbox').each(function () {
+					ids.push($(this).val());
+				});
+			}
+
+			return ids;
+		}
+
+		function downloadCsv(el) {
+			var ids = getCheckedCheckboxesIds();
+			var urlParams = '';
+
+			for (var i = 0; i < ids.length; i++) {
+				if (i > 0) {
+					urlParams += '&';
+				}
+				urlParams += 'ids[]=' + ids[i];
+			}
+
+			urlParams = urlParams.length > 0 ? '?' + urlParams : '';
+			window.open($(el).data('url') + urlParams, '_blank');
+		}
+	</script>
+{% endblock %}

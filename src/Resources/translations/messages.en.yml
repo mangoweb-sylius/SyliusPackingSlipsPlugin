@@ -1,0 +1,12 @@
+mango-sylius:
+    ui:
+        packingSlips:
+            packingSlips: Packing Slips
+            downloadButton: Download packing slips
+            allShipment: All
+            orderNumber: Order number
+            shippingAddress: Shipping address
+            email: Email
+            phoneNumber: Phone number
+            orderDate: Order date
+            shippingMethod: Shipping method

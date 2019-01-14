@@ -1,0 +1,9 @@
+mango_sylius_admin_packing_slips_index:
+    path: /packing_slips
+    defaults:
+        _controller: MangoSylius\PackingSlipsPlugin\Controller\PackingSlipsController:index
+
+mango_sylius_admin_packing_slips_show:
+    path: /packing_slips/show
+    defaults:
+        _controller: MangoSylius\PackingSlipsPlugin\Controller\PackingSlipsController:show
