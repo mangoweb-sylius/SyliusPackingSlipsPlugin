@@ -56,7 +56,7 @@ class PackingSlipsController
 		);
 	}
 
-	private function getShipmentsByIds(array $ids): array
+	public function getShipmentsByIds(array $ids): array
 	{
 		/** @var EntityRepository $shipmentRepository */
 		$shipmentRepository = $this->shipmentRepository;
@@ -71,7 +71,7 @@ class PackingSlipsController
 			->getResult();
 	}
 
-	private function getReadyShipments(): array
+	public function getReadyShipments(): array
 	{
 		/** @var EntityRepository $shipmentRepository */
 		$shipmentRepository = $this->shipmentRepository;
