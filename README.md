@@ -7,7 +7,11 @@
 
 ## Features
 
-xxxx
+* Print packing slips or any kind of labels for orders which are not sent. The default template prints the grid with basic order information for printing small labels, however the template is easily customizable to print A4 slips too (see usabe below).
+
+<p align="center">
+	<img src="https://raw.githubusercontent.com/mangoweb-sylius/SyliusPackingSlipsPlugin/master/doc/admin.png"/>
+</p>
 
 ## Installation
 
@@ -23,7 +27,7 @@ mango_sylius_shipment_export_plugin:
 
 ### Usage
 
-You can override package slips grid template.
+You can override package slips template.
 
 * `@MangoSyliusPackingSlipsPlugin/show.html.twig`
 * `@MangoSyliusPackingSlipsPlugin/tdUnit.html.twig`
