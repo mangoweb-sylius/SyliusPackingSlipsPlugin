@@ -27,6 +27,11 @@ class Kernel extends BaseKernel
 		return $this->getProjectDir() . '/var/log';
 	}
 
+	protected function getContainerClass()
+	{
+		return 'testContainer';
+	}
+
 	public function registerBundles()
 	{
 		$contents = require $this->getProjectDir() . '/config/bundles.php';
