@@ -54,11 +54,11 @@
 <div class="slips">
 	<div class="slips-page">
 		{% for shipment in shipments %}
-			{% if loop.index % 25 == 0 %}
-				</div>
-				<div class="slips-page">
-			{% endif %}
-			{{ include('@MangoSyliusPackingSlipsPlugin/tdUnit.html.twig') }}
+		{% if loop.index0 % 24 == 0 and loop.index0 != 0 %}
+	</div>
+	<div class="slips-page">
+		{% endif %}
+		{{ include('@MangoSyliusPackingSlipsPlugin/tdUnit.html.twig') }}
 		{% endfor %}
 	</div>
 </div>
