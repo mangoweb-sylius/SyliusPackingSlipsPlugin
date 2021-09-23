@@ -34,7 +34,7 @@ Packing Slips Plugin
 ```
 mango_sylius_shipment_export_plugin:
     resource: "@MangoSyliusPackingSlipsPlugin/Resources/config/routing.yml"
-    prefix: /admin
+    prefix: /%sylius_admin.path_name%
 ```
 
 ### Usage
