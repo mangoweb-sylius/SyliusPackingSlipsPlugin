@@ -9,18 +9,18 @@ use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\Component\Core\Repository\ShipmentRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 class PackingSlipsController
 {
-	/** @var EngineInterface */
+	/** @var Environment  */
 	private $templatingEngine;
 
 	/** @var ShipmentRepositoryInterface */
 	private $shipmentRepository;
 
 	public function __construct(
-		EngineInterface $templatingEngine,
+		Environment  $templatingEngine,
 		ShipmentRepositoryInterface $shipmentRepository
 	) {
 		$this->templatingEngine = $templatingEngine;

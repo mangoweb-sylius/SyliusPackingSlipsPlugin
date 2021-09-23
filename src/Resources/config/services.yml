@@ -13,5 +13,5 @@ services:
     MangoSylius\PackingSlipsPlugin\Controller\PackingSlipsController:
         public: true
         arguments:
-            $templatingEngine: '@templating'
+            $templatingEngine: '@twig'
             $shipmentRepository: '@sylius.repository.shipment'
